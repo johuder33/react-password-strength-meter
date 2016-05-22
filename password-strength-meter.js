@@ -57,12 +57,27 @@ export default class PasswordStrengthMeter extends Component{
 
   render(){
     const { passwordText } = this.props;
+    const {hasLabel} = this.props;
+    const hasWarningText = this.props.hasWarning ? this.props.warning : null;
+    const {className} = this.props;
+
     const passwordHeader = (passwordText) ? passwordText : 'Enter Password';
-    const {resultScore,warning,suggestions} = this.state;
+    const showLabel = this.props.hasLabel ? 'show' : 'hide';
+    let _state = this.state;
+    const resultScore = _state.resultScore != undefined ? _state.resultScore : 'Su contraseña es muy fuerte.';
+    let warning = '';
+    let suggestions = '';
+    const {hasSuggestion} = this.state;
+
+    if (hasSuggestion) {
+      warning = _state.warning;
+      suggestions = _state.suggestions;
+    }
+    
     return(
       <section>
-        <label forHtml="password">{passwordHeader}</label>
-        <input onInput={this.handleInput} type="password" name="password" id="password" ref="password" />
+        <label forHtml="password" className={showLabel}>{passwordHeader}</label>
+        <input onInput={this.handleInput} type="password" name="password" id="password" ref="password" className={className}/>
 
         <meter max="4" id="password-strength-meter" ref="passwordStrengthMeter"></meter>
         <p id="password-strength-text" ref="passwordStrengthText">
@@ -77,6 +92,11 @@ export default class PasswordStrengthMeter extends Component{
 
 PasswordStrengthMeter.propTypes = {
   passwordText: React.PropTypes.string,
+  hasLabel: React.PropTypes.bool,
+  hasWarning: React.PropTypes.bool,
+  warning: React.PropTypes.string,
+  className: React.PropTypes.any,
   strength: React.PropTypes.object,
   onChange: React.PropTypes.func,
+  hasSuggestion: React.PropTypes.bool
 }
