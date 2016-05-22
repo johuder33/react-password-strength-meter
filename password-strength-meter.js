@@ -74,10 +74,10 @@ export default class PasswordStrengthMeter extends Component{
       suggestions = _state.suggestions;
     }
     
-    return(
+    return (
       <section>
         <label forHtml="password" className={showLabel}>{passwordHeader}</label>
-        <input onInput={this.handleInput} type="password" name="password" id="password" ref="password" className={className}/>
+        <input onInput={this.handleInput} type="password" name="password" id="password" ref="password" className={className} />
 
         <meter max="4" id="password-strength-meter" ref="passwordStrengthMeter"></meter>
         <p id="password-strength-text" ref="passwordStrengthText">
@@ -85,6 +85,7 @@ export default class PasswordStrengthMeter extends Component{
             "Strength: "}
             <strong>{resultScore}</strong><span className="feedback">{warning + " " + suggestions}</span>
         </p>
+        <label className='text-success'>{hasWarningText}</label>
       </section>
     )
   }
